@@ -1,0 +1,70 @@
+<% layout('layouts/boilerplate') %>
+<div class="row">
+    <h1 class="text-center">Add Campground</h1>
+    <div class="col-6 offset-3">
+        <form action="/campgrounds" method="post" novalidate class="validated-form">
+            <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input class="form-control" type="text" id="title" placeholder="Enter Name"
+                    name="campground[title]" required>
+                <div class="valid-feedback">
+                    Looks Good!!
+                </div>
+                <div class="invalid-feedback">
+                    Name Required
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="location">Location</label>
+                <input class="form-control" type="text" id="location" placeholder="Enter location"
+                    name="campground[location]" required>
+                <div class="valid-feedback">
+                    Looks Good!!
+                </div>
+                <div class="invalid-feedback">
+                    Location Required
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="image">Image Url</label>
+                <input class="form-control" type="text" id="image" placeholder="Enter imageUrl"
+                name="campground[image]" required>
+                <div class="valid-feedback">
+                    Looks Good!!
+                </div>
+                <div class="invalid-feedback">
+                    Image Required
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="price">Price</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="price-label">Rs.</span>
+                    <input type="text" class="form-control" id="price" placeholder="00" aria-label="price"
+                        aria-describedby="price-label" name="campground[price]" required>
+                </div>
+                <div class="valid-feedback">
+                    Looks Good!!
+                </div>
+                <div class="invalid-feedback">
+                    Price Required
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control" type="text" id="description" placeholder="Enter description"
+                    name="campground[description]" required></textarea>
+                <div class="valid-feedback">
+                    Looks Good!!
+                </div>
+                <div class="invalid-feedback">
+                    Give Description
+                </div>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-success">Add Campground</button>
+            </div>
+        </form>
+        <a href="/campgrounds">Cancel</a>
+    </div>
+</div>
