@@ -102,9 +102,11 @@ const secret = process.env.SECRET || 'thisisasecret';
 
 const store = MongoStore.create({
     mongoUrl: localUrl,
-    secret,
-    touchAfter: 24 * 3600
-})
+    touchAfter: 24 * 3600,
+    crypto: {
+        secret,
+    },
+});
 
 store.on('error', function(e){
     console.log("Session Store Error ", e);
@@ -112,7 +114,7 @@ store.on('error', function(e){
 
 const sessionConfig = {
     store,
-    name: 'session',
+    name: 'newSession',
     secret,
     resave: false,
     saveUninitialized: true,
@@ -134,6 +136,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req,res,next)=>{
+    if (!['/login', '/'].includes(req.originalUrl)) {
+        req.session.returnTo = req.originalUrl;
+    }
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
