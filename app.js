@@ -24,7 +24,7 @@ const campgroundRoutes = require('./routes/campground');
 const reviewRoutes = require('./routes/review');
 const dbUrl = process.env.DB_URL;
 const localUrl = 'mongodb://localhost:27017/yelp-camp'
-mongoose.connect(dbUrl || localUrl, {
+mongoose.connect((dbUrl || localUrl), {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
