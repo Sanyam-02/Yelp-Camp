@@ -1,4 +1,26 @@
 const Joi = require('joi');
+// const sanitizeHTML = require('sanitize-html');
+
+// const extension = (joi)=>({
+//     type: 'string',
+//     base: joi.string(),
+//     messages: {
+//         'string.excapeHTML': '{{#label)) must mot include HTML!!'
+//     },
+//     rules: {
+//         escapeHTML: {
+//             validate(value, helpers) {
+//                 const clean = sanitizeHTML(value, {
+//                     allowedTags: [],
+//                     allowedAttributes: {},
+//                 });
+//                 if(clean !== value) return helpers.error('string.escapeHTML', {value})
+//             }
+//         }
+//     }
+// });
+
+// const Joi = BaseJoi.extend(extension);
 
 module.exports.campgroundSchema = Joi.object({
     campground: Joi.object({
