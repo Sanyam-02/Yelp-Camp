@@ -3,7 +3,7 @@ const Logger = require('nodemon/lib/utils/log');
 const passport = require('passport');
 const users = require('../controllers/user');
 const router = express.Router();
-const catchAsync = require('../utlis/catchAsync');
+const catchAsync = require('../utils/catchAsync');
 
 router.route('/register')
     .get(users.renderRegister)
