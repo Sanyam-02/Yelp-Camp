@@ -42,7 +42,40 @@ app.set('views', path.join(__dirname,'views'))
 app.use(express.urlencoded({extended: true}))
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(mongoSanitize())
+app.use(mongoSanitize({
+    replaceWith: '_',
+}))
+
+const secret = process.env.SECRET || 'thisisasecret';
+
+const store = MongoStore.create({
+    mongoUrl: localUrl,
+    touchAfter: 24 * 3600,
+    crypto: {
+        secret,
+    },
+});
+
+store.on('error', function(e){
+    console.log("Session Store Error ", e);
+})
+
+const sessionConfig = {
+    store,
+    name: 'newSession',
+    secret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        // secure:
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+} 
+app.use(session(sessionConfig))
+app.use(flash());
+
 const scriptSrcUrls = [
     "https://stackpath.bootstrapcdn.com/",
     "https://api.tiles.mapbox.com/",
@@ -97,36 +130,6 @@ app.use(
         crossOriginResourcePolicy: false
     })
 );
-
-const secret = process.env.SECRET || 'thisisasecret';
-
-const store = MongoStore.create({
-    mongoUrl: localUrl,
-    touchAfter: 24 * 3600,
-    crypto: {
-        secret,
-    },
-});
-
-store.on('error', function(e){
-    console.log("Session Store Error ", e);
-})
-
-const sessionConfig = {
-    store,
-    name: 'newSession',
-    secret,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        httpOnly: true,
-        // secure:
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-        maxAge: 1000 * 60 * 60 * 24 * 7
-    }
-} 
-app.use(session(sessionConfig))
-app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
